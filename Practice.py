@@ -287,3 +287,4 @@ TypeError: unsupported operand type(s) for -: 'NoneType' and 'int'
 {'total_valid': 8, 'skipped': 2, 'counts': {'n': 5, 'm': 2, 'u': 1}, 'avg_elbow': {'made': 90.2, 'missed': 107.0, 'undetermined': 97.0}, 'avg_knee': {'made': 119.0, 'missed': 136.5, 'undetermined': 131.0}, 'best_ids': [9, 3, 10]}
 󰪢 0s 󰜥 󰉋  ••/ProjectCS 󰜥 󰘬 main 
     
+'''
