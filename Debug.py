@@ -46,18 +46,25 @@ print("Bent frames (< 100):", count_bent_frames(shot_frames, 100))
 
 #EXERCISE 2
 '''
-a) Syntax | if queues["north"] > 5 | Missing ":" 
-b) Syntax | print(queues["North"]) | variable is north not North
-c) Runtime | cars_served = 0 | this would make the next line divide by 0
-d) Logic | busiest = min(queues, key=queues.get) | it should busiest = max.... as we need to serve place with highest queue
-
-1. Runtime error as you cant add a string to an integer
-2. queues[direction] += arrivals[direction] inside the update_queues funcntion
-3. 
-4. queues[direction] += int(arrivals[direction]), reads the assigned integer value to the arrival instead of using the string
+a) syntax | if queues["north"] > 5 | missing :
+b) runtime | print(queues["North"]) | key is "north" not "North"
+c) runtime | average_wait = total_wait / cars_served | cars_served = 0 so it divides by 0
+d) logic | busiest = min(queues, key=queues.get) | should use max() as we need the longest queue
 '''
 
 '''
+1. Runtime | TypeError | cant add a string to an integer
+2. queues[direction] += arrivals[direction] | inside update_queues function
+3. <module> -> run_step() -> update_queues()
+4. queues[direction] += int(arrivals[direction]) | converts the string into an integer before adding
+
+Predicted output: {'north': 6, 'south': 8, 'east': 5, 'west': 5}
+'''
+
+'''
+queues = {"north": 4, "south": 7, "east": 2, "west": 5}
+arrivals = {"north": "2", "south": "1", "east": "3", "west": "0"}
+
 def update_queues(queues, arrivals):
     for direction in queues:
         queues[direction] += int(arrivals[direction])
@@ -69,19 +76,26 @@ def run_step(queues, arrivals):
 print(run_step(queues, arrivals))
 '''
 
+'''
+1. logic | return min(queues, key=queues.get) | should use max() because the longest queue gets green, confirmed when south was chosen instead of east
+2. logic | queues[direction] = queues[direction] - cars_per_step | queues can become negative, fixed using max(0, queues[direction] - cars_per_step)
+3. logic | return total // len(history) | should use / instead of // because // rounds down, confirmed when average became 10.5 instead of 10
+'''
+
+'''
 queues = {"north": 4, "south": 7, "east": 2, "west": 5}
 
 def choose_green(queues):
-    return min(queues, key=queues.get)
+    return max(queues, key=queues.get)
 
 def serve(queues, direction, cars_per_step=3):
-    queues[direction] = queues[direction] - cars_per_step
+    queues[direction] = max(0, queues[direction] - cars_per_step)
 
 def average_queue(history):
     total = 0
     for length in history:
         total = total + length
-    return total // len(history)
+    return total / len(history)
 
 history = []
 for step in range(4):
@@ -89,4 +103,14 @@ for step in range(4):
     serve(queues, green)
     history.append(sum(queues.values()))
     print("Step", step, "| green:", green, "| queues:", queues)
-    print("Average total queue:", average_queue(history))
+
+print("Average total queue:", average_queue(history))
+'''
+
+'''
+1. I would notice the average waiting time being too high because the program serves the shortest queue instead of the longest one
+
+2. Negative queues are impossible because you cant have fewer than 0 cars waiting, even though Python allows negative numbers
+
+3. print(queues) | wanted to check the queues after each step, showed that east became negative because more cars were removed than existed
+'''
