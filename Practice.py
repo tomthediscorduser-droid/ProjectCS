@@ -96,21 +96,15 @@ def closest_to_ideal(shots, ideal, n):
     return ids
 
 def build_report(shots, ideal=90, n=3, min_conf=0.6):
-
     cleaned = clean_shots(shots)
-
     valid = filter_confident(cleaned, min_conf)
-
     total_valid = len(valid)
-    skipped = len(shots) - total_valid
-
+    skipped = len(shots) - total_vali
     counts = count_results(valid)
-
     avg_elbow = average_by_status(valid, 'elbow_angle')
     avg_knee = average_by_status(valid, 'knee_angle')
-
     best_ids = closest_to_ideal(valid, ideal, n)
-
+    
     report = {
         'total_valid': total_valid,
         'skipped': skipped,
@@ -119,7 +113,6 @@ def build_report(shots, ideal=90, n=3, min_conf=0.6):
         'avg_knee': avg_knee,
         'best_ids': best_ids
     }
-
     return report
 
 print(closest_to_ideal(clean_shots(shots), 90, 3))
